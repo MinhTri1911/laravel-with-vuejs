@@ -1,0 +1,30 @@
+version: '3'
+services:
+  webserver:
+    build: .
+    container_name: laravel-vuejs-server
+    volumes:
+      - ../:/var/www/html
+    ports:
+      - "80:80"
+    links:
+      - dbserver
+      - redis
+  dbserver:
+    image: mysql:5.7
+    container_name: laravel-vuejs-db
+    environment:
+      - "MYSQL_ROOT_PASSWORD=minht1911"
+      - "MYSQL_DATABASE=hotel"
+    volumes:
+      - ../db/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  redis:
+    image: redis
+    container_name: laravel-vuejs-redis
+    volumes:
+      - ../db/redis:/data
+    ports:
+        - "6380:6379"
+
